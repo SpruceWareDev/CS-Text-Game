@@ -48,18 +48,19 @@ def game():
         # help command prints out all the commands you can use
         if split_command[0] == "help":
             print("""
-            You can move around the map by using the move commands followed by [north, east, south, west].
+            You can use the following commands:
+            You can use the 'location' command to do all location actions. For help type 'location help'.
             You can also use the command 'help' to see what commands you can run.
             You can also use the command 'inventory' to see what items you have.
             You can also use the command 'quit' to quit the game.
             """)
-        # move command handles moving the player around the current location they are in using compass points
-        elif split_command[0] == "move":
-            # checks if the player has entered a direction
+        # location command handles location commands like movement and help
+        elif split_command[0] == "location":
+            # checks if the player has entered a command
             if len(split_command) < 2:
-                print("Invalid command. You must add a direction to move.")
+                print("Invalid command. You must add a location command. If not sure type 'location help'.")
             else:
-                current_location.move_player(split_command[1])
+                current_location.handle_location_command(split_command[1], split_command[2:])
         # inventory command prints out all the items the player has
         elif split_command[0] == "inventory":
             print("You have the following items:")

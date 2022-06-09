@@ -29,6 +29,21 @@ class Location:
         print("You have moved {}".format(direction))
         print(f"You are now at {self.playerX}, {self.playerY}")
 
+    def handle_location_command(self, command, args):
+        if command == "help":
+            print("""
+            You can use the following location commands:
+            You can use the 'move' command followed by 'north', 'east', 'south' or 'west' to move around.
+            You can also use the command 'help' to see what commands you can run (this menu).
+            """)
+        elif command == "move":
+            if len(args) < 1:
+                print("Invalid command. You must add a direction to move. If not sure type 'location help'.")
+            else:
+                self.move_player(args[0])
+        else:
+            print("Invalid command")
+
 
 class StartForest(Location):
     def __init__(self):
