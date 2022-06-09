@@ -37,11 +37,14 @@ def game():
     typing_effect("You have created a player named {}".format(player.name), 0.05)
 
     # starts in the forest
-    current_location = location.StartForest()
+    current_location = location.StartForest(player)
     typing_effect("You have entered the {}".format(current_location.name), 0.05)
-    typing_effect("You can move around the map by using the directions north, south, east, and west.", 0.05)
-    typing_effect("You can also use the command 'help' to see what commands you can run..", 0.05)
+    typing_effect(f"The location you have entered is {current_location.sizeX} by {current_location.sizeY}.", 0.05)
+    typing_effect("You can use the command 'help' to see what commands you can run..", 0.05)
 
+    # command system for the game
+    # controls basically everything in the game
+    # might improve this later with classes or something
     while playing:
         command = input("> ")
         split_command = command.split(" ")
@@ -65,7 +68,7 @@ def game():
         elif split_command[0] == "inventory":
             print("You have the following items:")
             for item in player.get_inventory():
-                print(item)
+                print(f"- {item.name} - {item.description}")
         # quit command quits the game
         elif split_command[0] == "quit":
             playing = False
@@ -74,6 +77,7 @@ def game():
 
 
 def tutorial():
+    # tutorial but its not done bc i want a game first XD
     typing_effect("Welcome to the tutorial!", 0.05)
 
 

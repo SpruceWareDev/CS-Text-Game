@@ -1,7 +1,12 @@
+import random
+import items
+
+
 class Location:
-    def __init__(self, name, description, sizeX, sizeY):
+    def __init__(self, player, name, description, sizeX, sizeY):
         self.name = name
         self.description = description
+        self.player = player
         self.sizeX = sizeX
         self.sizeY = sizeY
         self.playerX = 0
@@ -35,18 +40,38 @@ class Location:
             You can use the following location commands:
             You can use the 'move' command followed by 'north', 'east', 'south' or 'west' to move around.
             You can also use the command 'help' to see what commands you can run (this menu).
+            You can also use the command 'search' to search the location you are currently in.
             """)
         elif command == "move":
             if len(args) < 1:
                 print("Invalid command. You must add a direction to move. If not sure type 'location help'.")
             else:
                 self.move_player(args[0])
+        elif command == "search":
+            self.search_location()
         else:
             print("Invalid command")
 
+    def search_location(self):
+        print("Nothing to search here.")
+
 
 class StartForest(Location):
-    def __init__(self):
-        super().__init__("Start Forest", "A small forest that you start in.", 5, 5)
+    def __init__(self, player):
+        super().__init__(player, "Start Forest", "A small forest that you start in.", 10, 10)
         self.playerX = 0
         self.playerY = 0
+
+    def search_location(self):
+        print("You are searching the current area.")
+        num = random.randint(1, 10)
+        if num == 1:
+            found_item = items.Stick()
+            print(f"You have found a {found_item.name}!")
+            self.player.add_item(found_item)
+        elif num == 2:
+            found_item = items.WoodenSword()
+            print(f"You have found a {found_item.name}!")
+            self.player.add_item(found_item)
+        else:
+            print("You found nothing.")
