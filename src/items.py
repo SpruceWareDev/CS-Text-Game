@@ -12,9 +12,9 @@ class Item:
         return self.stack_size > 1
 
 
-##########
-# weapons#
-##########
+###########
+# weapons #
+###########
 
 class Weapon(Item):
     def __init__(self, name, description, damage):
