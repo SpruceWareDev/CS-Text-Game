@@ -33,6 +33,14 @@ class Stick(Weapon):
         return self.damage * 2
 
 
+class SpunkStick(Weapon):
+    def __init__(self):
+        super().__init__("SpunkStick", "A simple spunky stick (murder harry fenton).", 1)
+
+    def special_attack(self):
+        return self.damage * 10
+
+
 class WoodenSword(Weapon):
     def __init__(self):
         super().__init__("Wooden Sword", "A basic wooden sword.", 10)

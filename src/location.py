@@ -39,6 +39,7 @@ class Location:
 
         if self.is_player_on_chest():
             debug_print("Player is on a chest")
+            self.handle_chest_interaction(self.playerX, self.playerY)
 
         print("You have moved {}".format(direction))
         print(f"You are now at {self.playerX}, {self.playerY}")
@@ -50,6 +51,7 @@ class Location:
             You can use the 'move' command followed by 'north', 'east', 'south' or 'west' to move around.
             You can also use the command 'help' to see what commands you can run (this menu).
             You can also use the command 'search' to search the location you are currently in.
+            You can also use the command 'current' to see your current location.
             """)
         elif command == "move":
             if len(args) < 1:
@@ -58,6 +60,8 @@ class Location:
                 self.move_player(args[0])
         elif command == "search":
             self.search_location()
+        elif command == "current":
+            print(f"You are currently at {self.playerX}, {self.playerY}.")
         else:
             print("Invalid command")
 
@@ -72,6 +76,9 @@ class Location:
             return True
         else:
             return False
+
+    def handle_chest_interaction(self, chestX, chestY):
+        pass
 
 
 class StartForest(Location):
@@ -109,3 +116,9 @@ class StartForest(Location):
             self.chest_locations.append([x, y])
 
             debug_print(f"Chest location: {x}, {y}")
+
+    def handle_chest_interaction(self, x, y):
+        contents = [items.Stick(), items.WoodenSword()]
+        chest = location_objects.Chest("Crap Chest", "Crappy chest", contents)
+        debug_print(f"The name of the chest is {chest.name}.")
+            

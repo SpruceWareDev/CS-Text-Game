@@ -2,10 +2,12 @@ import time
 import sys
 import random
 
+DEBUG = True
+
 
 def typing_effect(text, delay):
     for char in text:
-        time.sleep(delay)
+        time.sleep(0)
         sys.stdout.write(char)
         sys.stdout.flush()
     sys.stdout.write("\n")
@@ -13,4 +15,5 @@ def typing_effect(text, delay):
 
 
 def debug_print(text):
-    print(f"[DEBUG] {text}")
+    if DEBUG:
+        print(f"[DEBUG] {text}")
