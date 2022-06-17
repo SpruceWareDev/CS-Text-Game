@@ -1,1 +1,1 @@
-Health Potion,Stick,Stick,
+Health Potion,Stick,Health Potion,

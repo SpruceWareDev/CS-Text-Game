@@ -68,6 +68,7 @@ class Location:
             You can also use the command 'help' to see what commands you can run (this menu).
             You can also use the command 'search' to search the location you are currently in.
             You can also use the command 'current' to see your current location.
+            You can also use the command 'chest' to help guide you to a nearby chest.
             """)
         elif command == "move":
             if len(args) < 1:
@@ -76,6 +77,8 @@ class Location:
                 self.move_player(args[0])
         elif command == "search":
             self.search_location()
+        elif command == "chest":
+            self.chest_hint()
         elif command == "current":
             print(f"You are currently at {self.playerX}, {self.playerY}.")
         else:
@@ -86,6 +89,37 @@ class Location:
 
     def set_chest_data(self, chest_amount):
         pass
+
+    # function that returns the x and y of the closest chest to the players position
+    def get_closest_chest(self):
+        closest_pos = [self.sizeX, self.sizeY]
+        for chest_location in self.chest_locations:
+            if chest_location[0] < closest_pos[0] or chest_location[1] < closest_pos[1]:
+                closest_pos = chest_location
+        return closest_pos
+
+    # gives the player a hint on where to head to find a chest
+    def chest_hint(self):
+        closest_chest_pos = self.get_closest_chest()
+        debug_print(f"Closest chest is {closest_chest_pos}")
+
+        directionX = ""
+        directionY = ""
+        if closest_chest_pos[0] > self.playerX:
+            directionX = "east"
+        elif closest_chest_pos[0] < self.playerX:
+            directionX = "west"
+        elif closest_chest_pos[0] == self.playerX:
+            directionX = "none"
+
+        if closest_chest_pos[1] < self.playerY:
+            directionY = "north"
+        elif closest_chest_pos[1] > self.playerY:
+            directionY = "south"
+        elif closest_chest_pos[1] == self.playerY:
+            directionY = "none"
+
+        print(f"To find a chest you can move {directionY}, {directionX}.")
 
     def is_player_on_chest(self):
         if [self.playerX, self.playerY] in self.chest_locations:
@@ -126,7 +160,7 @@ class StartForest(Location):
                 print("There are no more items in the area you are in.")
 
     def set_chest_data(self, chest_amount):
-        for i in range(chest_amount):
+        for _ in range(chest_amount):
             x = random.randint(0, self.sizeX - 1)
             y = random.randint(0, self.sizeY - 1)
             self.chest_locations.append([x, y])
