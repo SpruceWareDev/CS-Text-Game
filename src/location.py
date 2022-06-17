@@ -2,6 +2,7 @@ import random
 import items
 import location_objects
 from utils import debug_print
+from utils import typing_effect
 
 
 class Location:
@@ -22,27 +23,42 @@ class Location:
         return self.name
 
     def move_player(self, direction):
+        valid = True
         if direction == "north":
             if self.playerY > 0:
                 self.playerY -= 1
+            else:
+                print("You cannot move there!")
+                valid = False
         elif direction == "south":
             if self.playerY < self.sizeY:
                 self.playerY += 1
+            else:
+                print("You cannot move there!")
+                valid = False
         elif direction == "east":
             if self.playerX < self.sizeX - 1:
                 self.playerX += 1
+            else:
+                print("You cannot move there!")
+                valid = False
         elif direction == "west":
             if self.playerX > 0:
                 self.playerX -= 1
+            else:
+                print("You cannot move there!")
+                valid = False
         else:
             print("Invalid direction")
+            valid = False
+
+        if valid:
+            print("You have moved {}".format(direction))
+            print(f"You are now at {self.playerX}, {self.playerY}")
 
         if self.is_player_on_chest():
             debug_print("Player is on a chest")
             self.handle_chest_interaction(self.playerX, self.playerY)
-
-        print("You have moved {}".format(direction))
-        print(f"You are now at {self.playerX}, {self.playerY}")
 
     def handle_location_command(self, command, args):
         if command == "help":
@@ -77,7 +93,7 @@ class Location:
         else:
             return False
 
-    def handle_chest_interaction(self, chestX, chestY):
+    def handle_chest_interaction(self, chest_x, chest_y):
         pass
 
 
@@ -118,7 +134,22 @@ class StartForest(Location):
             debug_print(f"Chest location: {x}, {y}")
 
     def handle_chest_interaction(self, x, y):
-        contents = [items.Stick(), items.WoodenSword()]
+        # generate loot from a loot table (kinda)
+        contents = items.CrapLoot().generate_loot()
+        # creates a chest object that can store the contents as a list
         chest = location_objects.Chest("Crap Chest", "Crappy chest", contents)
         debug_print(f"The name of the chest is {chest.name}.")
+        debug_print(f"The contents of the chest: {chest.contents}.")
+
+        print()
+        typing_effect("You have encountered a chest!", 0.05)
+
+        choice = input("Would you like to loot it? <y/n> >")
+        if choice == "y":
+            for item in chest.contents:
+                self.player.add_item(item)
+                print(f"{item.name} has been added to your inventory!")
+        else:
+            print("You have ignored the chest!")
+
             

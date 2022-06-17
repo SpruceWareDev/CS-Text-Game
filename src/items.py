@@ -1,3 +1,6 @@
+import random
+
+
 class Item:
     def __init__(self, name, description, stack_size):
         self.name = name
@@ -55,3 +58,34 @@ class StoneSword(Weapon):
 
     def special_attack(self):
         return self.damage * 3
+
+
+###################
+# Loot Generation #
+###################
+
+class LootSet:
+    def __init__(self, chest_type):
+        self.chest_type = chest_type
+
+    def generate_loot(self):
+        pass
+
+
+class CrapLoot(LootSet):
+    def __init__(self):
+        super(CrapLoot, self).__init__("Crap Chest")
+
+    def generate_loot(self):
+        loot_array = []
+        for i in range(3):
+            num = random.randint(1, 3)
+            if num == 1:
+                loot_array.append(Stick())
+            elif num == 2:
+                loot_array.append(WoodenSword())
+            else:
+                loot_array.append(StoneSword())
+
+        return loot_array
+
