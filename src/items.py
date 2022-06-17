@@ -60,6 +60,28 @@ class StoneSword(Weapon):
         return self.damage * 3
 
 
+###############
+# Other items #
+###############
+class Potion:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+    def effect(self):
+        pass
+
+
+class HealthPotion(Potion):
+    def __init__(self, player):
+        super(HealthPotion, self).__init__("Health Potion", "A potion that heals you when used.")
+        self.player = player
+
+    def effect(self):
+        self.player.health = 100
+        print("You have been healed to full health!")
+
+
 ###################
 # Loot Generation #
 ###################
@@ -73,8 +95,9 @@ class LootSet:
 
 
 class CrapLoot(LootSet):
-    def __init__(self):
+    def __init__(self, player):
         super(CrapLoot, self).__init__("Crap Chest")
+        self.player = player
 
     def generate_loot(self):
         loot_array = []
@@ -85,7 +108,6 @@ class CrapLoot(LootSet):
             elif num == 2:
                 loot_array.append(WoodenSword())
             else:
-                loot_array.append(StoneSword())
+                loot_array.append(HealthPotion(self.player))
 
         return loot_array
-

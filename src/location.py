@@ -135,7 +135,7 @@ class StartForest(Location):
 
     def handle_chest_interaction(self, x, y):
         # generate loot from a loot table (kinda)
-        contents = items.CrapLoot().generate_loot()
+        contents = items.CrapLoot(self.player).generate_loot()
         # creates a chest object that can store the contents as a list
         chest = location_objects.Chest("Crap Chest", "Crappy chest", contents)
         debug_print(f"The name of the chest is {chest.name}.")
@@ -152,4 +152,4 @@ class StartForest(Location):
         else:
             print("You have ignored the chest!")
 
-            
+        self.chest_locations.remove([x, y])

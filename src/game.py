@@ -3,6 +3,7 @@ import login
 import random
 from utils import typing_effect
 import location
+import save_load
 
 
 def game_menu():
@@ -71,6 +72,8 @@ def game():
                 print(f"- {item.name} - {item.description}")
         # quit command quits the game
         elif split_command[0] == "quit":
+            # test save functionality
+            save_load.save_game_data(player, current_location)
             playing = False
         else:
             print("Invalid command")
