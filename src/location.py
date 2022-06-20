@@ -121,6 +121,10 @@ class Location:
 
         print(f"To find a chest you can move {directionY}, {directionX}.")
 
+    def set_player_position(self, x, y):
+        self.playerX = x
+        self.playerY = y
+
     def is_player_on_chest(self):
         if [self.playerX, self.playerY] in self.chest_locations:
             return True
@@ -137,8 +141,9 @@ class StartForest(Location):
         self.playerX = 0
         self.playerY = 0
         self.max_successful_searches = 3
+        self.max_chests = 3
 
-        self.set_chest_data(3)
+        # self.set_chest_data(3)
 
     def search_location(self):
         print("You are searching the current area.")
@@ -168,7 +173,7 @@ class StartForest(Location):
             debug_print(f"Chest location: {x}, {y}")
 
     def handle_chest_interaction(self, x, y):
-        # generate loot from a loot table (kinda)
+        # generate loot from a loot set (kinda)
         contents = items.CrapLoot(self.player).generate_loot()
         # creates a chest object that can store the contents as a list
         chest = location_objects.Chest("Crap Chest", "Crappy chest", contents)

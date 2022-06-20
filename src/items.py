@@ -111,3 +111,7 @@ class CrapLoot(LootSet):
                 loot_array.append(HealthPotion(self.player))
 
         return loot_array
+
+
+item_list = {"Stick": Stick, "Wooden Sword": WoodenSword, "Stone Sword": StoneSword, "SpunkStick": SpunkStick,
+         "Health Potion": HealthPotion}
