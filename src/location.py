@@ -201,4 +201,9 @@ class StartForest(Location):
         self.chest_locations.remove([x, y])
 
     def set_enemy_data(self, enemy_amount):
-        pass
+        for _ in range(enemy_amount):
+            x = random.randint(0, self.sizeX - 1)
+            y = random.randint(0, self.sizeY - 1)
+            self.enemy_locations.append([x, y])
+
+            debug_print(f"Enemy location: {x}, {y}")
