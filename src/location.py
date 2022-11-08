@@ -19,6 +19,10 @@ class Location:
         # will be a list of 2d lists holding x and y of chests in the location [[x,y],[x,y]]
         self.chest_locations = []
 
+        # enemy stuff
+        # will be a list of 2d lists holding the locations of enemies in the world
+        self.enemy_locations = []
+
     def __str__(self):
         return self.name
 
@@ -134,6 +138,9 @@ class Location:
     def handle_chest_interaction(self, chest_x, chest_y):
         pass
 
+    def handle_enemy_interaction(self, enemy_x, enemy_y):
+        pass
+
 
 class StartForest(Location):
     def __init__(self, player):
@@ -192,3 +199,6 @@ class StartForest(Location):
             print("You have ignored the chest!")
 
         self.chest_locations.remove([x, y])
+
+    def set_enemy_data(self, enemy_amount):
+        pass
